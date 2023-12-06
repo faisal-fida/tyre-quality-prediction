@@ -2,8 +2,14 @@ import streamlit as st
 from PIL import Image
 import tensorflow as tf
 import numpy as np
+from download_model import download_file
 
-model = tf.keras.models.load_model("tire_quality_model")
+if "tire_quality_model" not in st.session_state:
+    download_file()
+    print("Model downloaded!")
+    st.session_state.tire_quality_model = tf.keras.models.load_model(
+        "tire_quality_model"
+    )
 
 
 def preprocess_image(image):
